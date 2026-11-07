@@ -269,6 +269,8 @@ public class EditAlarmActivity extends Activity {
                 .setMessage(R.string.delete_confirm)
                 .setPositiveButton(R.string.delete, (d, w) -> {
                     store.delete(alarm.id);
+                    new SnoozeStore(this).remove(alarm.id);
+                    MonitorService.refresh(this);
                     finish();
                 })
                 .setNegativeButton(R.string.cancel, null)
@@ -292,6 +294,7 @@ public class EditAlarmActivity extends Activity {
             // Saved alarms wait for a real boundary crossing before firing
             alarm.state = Alarm.STATE_UNKNOWN;
             store.save(alarm);
+            MonitorService.refresh(this);
             finish();
         });
     }

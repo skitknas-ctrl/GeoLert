@@ -59,8 +59,9 @@ Android does not check the position on its own schedule; it only does so when an
 ### Interval rules
 - **Ceiling:** never longer than the user setting "Check position at least every…".
 - **Distance to nearest boundary:** the interval is shortened based on how far away the nearest relevant zone boundary is, assuming a high maximum speed (about 35 m/s ≈ 126 km/h). Far from all zones means rare checks; close to a zone means frequent checks.
-- **Movement:** if the phone has moved more than 100 m since the last check, the interval drops to 30 seconds while the movement continues.
-- **Floor:** never more often than every 30 seconds.
+- **Movement:** if the phone has moved more than 100 m since the last check, the interval drops to 30 seconds. Moving mode lasts until no 100 m step has been seen for 3 minutes.
+- **Floor:** never more often than every 30 seconds, except within 500 m of a zone boundary, where the floor is 10 seconds (at 50 km/h a bus covers 420 m in 30 s).
+- **Accuracy:** a position fix whose accuracy is worse than an alarm's radius is not used to decide that alarm.
 
 ### Movement triggers (extra position check)
 - Significant-motion sensor (built into Android, no Google services needed).
@@ -72,11 +73,15 @@ Note: detecting cell tower changes is heavily restricted since Android 10 and is
 ### Background operation
 - A foreground service with a permanent notification keeps monitoring running when needed (required by Android for frequent background location).
 - The user is asked to exempt the app from battery optimization. Some manufacturers (Samsung, Xiaomi and others) otherwise stop background apps.
-- After a phone restart, monitoring is started again automatically.
+- After a phone restart or an app update, monitoring is started again automatically, and pending snoozes are put back.
+- Snoozes use Android's alarm clock (`setAlarmClock`), so they ring on time even in deep sleep.
+- A ringing alarm stops by itself after 10 minutes if nobody reacts; the notification stays.
 
 ---
 
 ## Permissions
+
+The start screen shows a setup card until everything below is granted, one step at a time with an explanation.
 
 - Location: precise, and **"Allow all the time"** (background location)
 - Notifications

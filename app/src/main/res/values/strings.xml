@@ -26,4 +26,30 @@
     <string name="check_interval">Check position at least every…</string>
     <string name="version">Version</string>
     <string name="map_attribution">Map data © OpenStreetMap contributors</string>
+    <string name="fix">Fix</string>
+    <string name="continue_label">Continue</string>
+    <string name="setup_needed">Setup needed (%1$d left): %2$s</string>
+    <string name="setup_location_title">Allow location</string>
+    <string name="setup_location_text">GeoLert needs your precise location to know when you enter or leave a zone. Choose “Precise” and “While using the app” in the next step.</string>
+    <string name="setup_background_title">Allow location all the time</string>
+    <string name="setup_background_text">Alarms must work when the app is closed and the screen is off. On the next page, choose “Allow all the time”. Your position never leaves the phone.</string>
+    <string name="setup_notifications_title">Allow notifications</string>
+    <string name="setup_notifications_text">Alarms are shown as notifications, and Android requires a notification while GeoLert watches your position.</string>
+    <string name="setup_fullscreen_title">Allow full-screen alarms</string>
+    <string name="setup_fullscreen_text">Lets the alarm fill the screen, also over the lock screen, like an alarm clock. Turn it on for GeoLert on the next page.</string>
+    <string name="setup_battery_title">Turn off battery optimization</string>
+    <string name="setup_battery_text">Otherwise Android, or the phone maker, may stop GeoLert in the background and alarms can be missed. Choose “Allow” on the next page.</string>
+    <string name="channel_monitor">Position watching</string>
+    <string name="channel_alarm">Alarms</string>
+    <string name="monitor_starting">Starting…</string>
+    <plurals name="watching_alarms">
+        <item quantity="one">Watching %d alarm</item>
+        <item quantity="other">Watching %d alarms</item>
+    </plurals>
+    <string name="check_every">checks every %s</string>
+    <string name="dismiss">Dismiss</string>
+    <string name="snooze">Snooze</string>
+    <string name="snooze_for">Snooze %s</string>
+    <string name="arrived_at">You have arrived: %s</string>
+    <string name="left_zone">You have left: %s</string>
 </resources>

@@ -9,6 +9,8 @@ import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.Switch;
 import android.widget.TextView;
+import android.provider.Settings;
+import android.net.Uri;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,6 +22,8 @@ public class MainActivity extends Activity {
     private final List<Alarm> alarms = new ArrayList<>();
     private AlarmAdapter adapter;
     private View empty;
+    private View setupCard;
+    private TextView setupText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +39,13 @@ public class MainActivity extends Activity {
         list.setAdapter(adapter);
         list.setOnItemClickListener((parent, view, position, id) -> openEditor(alarms.get(position).id));
 
+        setupCard = findViewById(R.id.setup_card);
+        setupText = findViewById(R.id.setup_text);
+        findViewById(R.id.setup_button).setOnClickListener(v -> {
+            Setup.Step step = Setup.nextStep(this);
+            if (step != null) Setup.run(this, step);
+        });
+
         findViewById(R.id.btn_new).setOnClickListener(v -> openEditor(0));
         findViewById(R.id.btn_settings).setOnClickListener(
                 v -> startActivity(new Intent(this, SettingsActivity.class)));
@@ -44,6 +55,39 @@ public class MainActivity extends Activity {
     protected void onResume() {
         super.onResume();
         reload();
+        showSetup();
+        MonitorService.refresh(this);
+    }
+
+    private void showSetup() {
+        Setup.Step step = Setup.nextStep(this);
+        if (step == null) {
+            setupCard.setVisibility(View.GONE);
+            return;
+        }
+        setupCard.setVisibility(View.VISIBLE);
+        setupText.setText(getString(R.string.setup_needed, Setup.missingCount(this), getString(step.title)));
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode != Setup.REQ_PERMISSION) return;
+        boolean denied = false;
+        boolean canAskAgain = false;
+        for (int i = 0; i < permissions.length; i++) {
+            if (grantResults.length > i && grantResults[i] != android.content.pm.PackageManager.PERMISSION_GRANTED) {
+                denied = true;
+                if (shouldShowRequestPermissionRationale(permissions[i])) canAskAgain = true;
+            }
+        }
+        // Android stops showing the prompt after repeated "Don't allow": open the app's settings page instead
+        if (denied && !canAskAgain) {
+            startActivity(new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS,
+                    Uri.parse("package:" + getPackageName())));
+        }
+        showSetup();
+        MonitorService.refresh(this);
     }
 
     private void reload() {
@@ -93,6 +137,7 @@ public class MainActivity extends Activity {
                 // Re-activating starts from "unknown": it waits for a real crossing
                 a.state = Alarm.STATE_UNKNOWN;
                 store.save(a);
+                MonitorService.refresh(MainActivity.this);
                 row.setAlpha(checked ? 1f : 0.55f);
             });
             row.setAlpha(a.active ? 1f : 0.55f);
