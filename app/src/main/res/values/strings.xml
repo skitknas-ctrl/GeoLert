@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">GeoLert</string>
+    <string name="new_alarm">New alarm</string>
+    <string name="edit_alarm">Edit alarm</string>
+    <string name="settings">Settings</string>
+    <string name="no_alarms">No alarms yet.\nTap “New alarm” to create one.</string>
+    <string name="name_hint">Name</string>
+    <string name="tap_map_hint">Tap the map to set the zone center</string>
+    <string name="trigger_label">Trigger</string>
+    <string name="arrive">Arrive</string>
+    <string name="leave">Leave</string>
+    <string name="alert_methods">Alert methods</string>
+    <string name="sound">Sound</string>
+    <string name="vibration">Vibration</string>
+    <string name="flashlight">Flashlight blinking</string>
+    <string name="message_hint">Message shown when the alarm fires</string>
+    <string name="active">Active</string>
+    <string name="save">Save</string>
+    <string name="delete">Delete</string>
+    <string name="my_location">My location</string>
+    <string name="need_point">Tap the map to set the zone first.</string>
+    <string name="delete_confirm">Delete this alarm?</string>
+    <string name="cancel">Cancel</string>
+    <string name="alarm_sound">Alarm sound</string>
+    <string name="check_interval">Check position at least every…</string>
+    <string name="version">Version</string>
+    <string name="map_attribution">Map data © OpenStreetMap contributors</string>
+</resources>

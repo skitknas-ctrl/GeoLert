@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="accent">#E0532F</color>
+    <color name="icon_bg">#1F3B4D</color>
+    <color name="zone_fill">#33E0532F</color>
+    <color name="zone_stroke">#E0532F</color>
+</resources>
