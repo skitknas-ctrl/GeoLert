@@ -18,6 +18,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import org.osmdroid.config.Configuration;
+import org.osmdroid.config.IConfigurationProvider;
 import org.osmdroid.events.MapEventsReceiver;
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
 import org.osmdroid.util.GeoPoint;
@@ -57,7 +58,7 @@ public class EditAlarmActivity extends Activity {
         super.onCreate(savedInstanceState);
 
         // osmdroid: identify the app to the tile server and keep the tile cache in app storage
-        Configuration conf = Configuration.getInstance();
+        IConfigurationProvider conf = Configuration.getInstance();
         conf.load(this, getSharedPreferences("osmdroid", MODE_PRIVATE));
         conf.setUserAgentValue(BuildConfig.APPLICATION_ID);
         conf.setOsmdroidBasePath(new File(getCacheDir(), "osmdroid"));
